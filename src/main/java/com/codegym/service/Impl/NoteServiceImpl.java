@@ -38,4 +38,9 @@ public class NoteServiceImpl implements NoteService {
     public void remove(Long id) {
         noteRepository.delete(id);
     }
+
+    @Override
+    public Page<Note> findallByCategory(String category, Pageable pageable) {
+        return noteRepository.findAllByCategory(category, pageable);
+    }
 }

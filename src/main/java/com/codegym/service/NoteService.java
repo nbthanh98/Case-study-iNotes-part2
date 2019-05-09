@@ -11,4 +11,5 @@ public interface NoteService  {
     void save(Note note);
     void remove(Long id);
     Iterable<Note> findAllByCategory(Category category);
+    Page<Note> findallByCategory(String category, Pageable pageable);
 }

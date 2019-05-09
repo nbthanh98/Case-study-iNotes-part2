@@ -6,17 +6,16 @@ import com.codegym.service.CategoryService;
 import com.codegym.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class NoteController {
@@ -43,10 +42,16 @@ public class NoteController {
     // list note
 
     @GetMapping("/list-note")
-    public String listNote(Model model, Pageable pageable){
-        Page<Note> listNote =  noteService.findAll(pageable);
-        model.addAttribute("listNote", listNote);
-        return "/note/list-note";
+    public ModelAndView listNote(@RequestParam("category")Optional<String> category , Pageable pageable){
+        Page<Note> listNote;
+        if(category.isPresent()){
+                listNote = noteService.findallByCategory(category.get(), pageable);
+        }else{
+            listNote = noteService.findAll(pageable);
+        }
+        ModelAndView modelAndView = new ModelAndView("/note/list-note");
+        modelAndView.addObject("listNote", listNote);
+        return modelAndView;
     }
 
     // edit
