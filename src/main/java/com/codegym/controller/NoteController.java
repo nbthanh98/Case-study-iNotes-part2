@@ -5,6 +5,8 @@ import com.codegym.model.Note;
 import com.codegym.service.CategoryService;
 import com.codegym.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +43,8 @@ public class NoteController {
     // list note
 
     @GetMapping("/list-note")
-    public String listNote(Model model){
-        Iterable<Note> listNote =  noteService.findAll();
+    public String listNote(Model model, Pageable pageable){
+        Page<Note> listNote =  noteService.findAll(pageable);
         model.addAttribute("listNote", listNote);
         return "/note/list-note";
     }

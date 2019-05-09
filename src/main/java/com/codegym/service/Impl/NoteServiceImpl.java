@@ -5,6 +5,8 @@ import com.codegym.model.Note;
 import com.codegym.repository.NoteRepository;
 import com.codegym.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class NoteServiceImpl implements NoteService {
 
@@ -13,8 +15,8 @@ public class NoteServiceImpl implements NoteService {
 
 
     @Override
-    public Iterable<Note> findAll() {
-        return noteRepository.findAll();
+    public Page<Note> findAll(Pageable pageable) {
+        return noteRepository.findAll(pageable);
     }
 
     @Override

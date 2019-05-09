@@ -6,21 +6,27 @@
 </head>
 <body>
 <a th:href="@{/}">Back to create Note</a>
-    <table border="1px solid black">
-        <tr>
-            <td>Name</td>
-            <td>Content</td>
-            <td>Category</td>
-            <td>Edit</td>
-            <td>Delete</td>
-        </tr>
-        <tr th:each="note: ${listNote}">
-            <td th:text="${note.name}"></td>
-            <td th:text="${note.content}"></td>
-            <td><a th:href="@{/noteInCategory/__${note.category.id}__}" th:text="${note.category.name}"></a></td>
-            <td><a th:href="@{/edit-note/__${note.id}__}">Edit</a></td>
-            <td><a th:href="@{/delete-note/__${note.id}__}">Delete</a></td>
-        </tr>
-    </table>
+<table border="1px solid black">
+    <tr>
+        <td>Name</td>
+        <td>Content</td>
+        <td>Category</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    <tr th:each="note: ${listNote}">
+        <td th:text="${note.name}"></td>
+        <td th:text="${note.content}"></td>
+        <td><a th:href="@{/noteInCategory/__${note.category.id}__}" th:text="${note.category.name}"></a></td>
+        <td><a th:href="@{/edit-note/__${note.id}__}">Edit</a></td>
+        <td><a th:href="@{/delete-note/__${note.id}__}">Delete</a></td>
+    </tr>
+
+</table>
+<div>
+    <a th:href="@{'/list-note'(page=${listNote.number - 1})}" th:if="${listNote.hasPrevious()}">Previous</a>
+    <span th:text="${listNote.number + 1}"></span>/<span th:text="${listNote.totalPages}"></span>
+    <a th:href="@{'/list-note'(page=${listNote.number + 1})}" th:if="${listNote.hasNext()}">Next</a>
+</div>
 </body>
 </html>
